@@ -1,0 +1,436 @@
+// ==========================================
+// BIOREWARDS - PHOTO PROOF SYSTEM
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const challenges = [
+        {
+            name: "Plant a Seed",
+            description: "Plant a flower, vegetable, or tree seed.",
+            points: 500,
+            emoji: "🌱"
+        },
+        {
+            name: "Recycle Waste",
+            description: "Sort and recycle reusable materials.",
+            points: 300,
+            emoji: "♻️"
+        },
+        {
+            name: "Save Water",
+            description: "Practice water conservation at home.",
+            points: 500,
+            emoji: "💧"
+        },
+        {
+            name: "Clean Your Surroundings",
+            description: "Clean a safe area around your home or school.",
+            points: 400,
+            emoji: "🧹"
+        },
+        {
+            name: "Use Reusable Bags",
+            description: "Avoid single-use plastic bags.",
+            points: 200,
+            emoji: "🛍️"
+        },
+        {
+            name: "Save Electricity",
+            description: "Turn off unused lights and appliances.",
+            points: 250,
+            emoji: "💡"
+        },
+        {
+            name: "Bring a Reusable Bottle",
+            description: "Use a refillable water bottle.",
+            points: 200,
+            emoji: "🥤"
+        },
+        {
+            name: "Create an Eco-Brick",
+            description: "Make an eco-brick with adult guidance.",
+            points: 350,
+            emoji: "🧱"
+        },
+        {
+            name: "Grow a Vegetable",
+            description: "Grow vegetables in a pot or garden.",
+            points: 500,
+            emoji: "🥬"
+        }
+    ];
+
+    // Temporary browser storage for this prototype.
+    let submissions = JSON.parse(
+        localStorage.getItem("bioRewardsSubmissions") || "[]"
+    );
+
+    let selectedChallenge = null;
+
+    function saveSubmissions() {
+        localStorage.setItem(
+            "bioRewardsSubmissions",
+            JSON.stringify(submissions)
+        );
+    }
+
+    function getPoints() {
+        return submissions
+            .filter(item => item.status === "Approved")
+            .reduce((total, item) => total + item.points, 0);
+    }
+
+    // ------------------------------------------
+    // CHALLENGE DISPLAY
+    // ------------------------------------------
+
+    const challengeSection = document.querySelector(
+        ".challenges-section"
+    );
+
+    if (!challengeSection) {
+        console.error("Challenge section not found.");
+        return;
+    }
+
+    const oldCards = challengeSection.querySelectorAll(
+        ".challenge-card"
+    );
+
+    oldCards.forEach(card => {
+        card.style.display = "none";
+    });
+
+    const challengeHeading = document.createElement("div");
+    challengeHeading.className = "proof-challenges";
+
+    challengeHeading.innerHTML = `
+        <h2>Environmental Challenges</h2>
+        <p>Complete activities, upload photo proof, and earn Eco Points.</p>
+
+        <div class="eco-points-card">
+            <span>🪙</span>
+            <div>
+                <p>Your Approved Eco Points</p>
+                <h2 id="ecoPoints">0</h2>
+            </div>
+        </div>
+
+        <div class="proof-challenge-grid" id="proofChallengeGrid"></div>
+
+        <button class="proof-history-button" id="historyButton">
+            My Submissions
+        </button>
+
+        <button class="proof-admin-button" id="adminButton">
+            Admin Dashboard
+        </button>
+
+        <div id="proofContent"></div>
+    `;
+
+    challengeSection.appendChild(challengeHeading);
+
+    const grid = document.getElementById("proofChallengeGrid");
+
+    challenges.forEach((challenge, index) => {
+
+        const card = document.createElement("article");
+        card.className = "proof-challenge-card";
+
+        card.innerHTML = `
+            <div class="proof-emoji">${challenge.emoji}</div>
+            <h3>${challenge.name}</h3>
+            <p>${challenge.description}</p>
+            <div class="proof-reward">+${challenge.points} Eco Points</div>
+            <button class="proof-submit-button" type="button">
+                Submit Photo Proof
+            </button>
+        `;
+
+        card.querySelector("button").addEventListener("click", () => {
+            openSubmission(index);
+        });
+
+        grid.appendChild(card);
+    });
+
+    // ------------------------------------------
+    // POINTS DISPLAY
+    // ------------------------------------------
+
+    function updatePoints() {
+        document.getElementById("ecoPoints").textContent =
+            getPoints().toLocaleString();
+    }
+
+    // ------------------------------------------
+    // PHOTO SUBMISSION WINDOW
+    // ------------------------------------------
+
+    function openSubmission(index) {
+
+        selectedChallenge = challenges[index];
+
+        const content = document.getElementById("proofContent");
+
+        content.innerHTML = `
+            <div class="proof-panel">
+                <h2>Submit Your Photo Proof</h2>
+
+                <h3>${selectedChallenge.emoji} ${selectedChallenge.name}</h3>
+
+                <p>Reward: ${selectedChallenge.points} Eco Points</p>
+
+                <label for="proofName">Your Name</label>
+                <input
+                    id="proofName"
+                    type="text"
+                    placeholder="Enter your name"
+                    maxlength="50"
+                >
+
+                <label for="proofPhoto">Upload Your Photo</label>
+                <input
+                    id="proofPhoto"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+                <img id="photoPreview" alt="Photo preview">
+
+                <p id="proofError"></p>
+
+                <button id="sendProofButton" type="button">
+                    Submit for Verification
+                </button>
+
+                <button id="cancelProofButton" type="button">
+                    Cancel
+                </button>
+            </div>
+        `;
+
+        const photoInput = document.getElementById("proofPhoto");
+        const preview = document.getElementById("photoPreview");
+
+        photoInput.addEventListener("change", () => {
+
+            const file = photoInput.files[0];
+
+            if (!file) return;
+
+            if (file.size > 2 * 1024 * 1024) {
+                document.getElementById("proofError").textContent =
+                    "Please choose an image smaller than 2 MB.";
+                photoInput.value = "";
+                preview.style.display = "none";
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = event => {
+                preview.src = event.target.result;
+                preview.style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("cancelProofButton")
+            .addEventListener("click", () => {
+                content.innerHTML = "";
+            });
+
+        document.getElementById("sendProofButton")
+            .addEventListener("click", submitProof);
+
+        content.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // ------------------------------------------
+    // SUBMIT PHOTO
+    // ------------------------------------------
+
+    function submitProof() {
+
+        const name = document.getElementById("proofName").value.trim();
+        const photo = document.getElementById("proofPhoto").files[0];
+        const error = document.getElementById("proofError");
+
+        if (!name) {
+            error.textContent = "Please enter your name.";
+            return;
+        }
+
+        if (!photo) {
+            error.textContent = "Please upload a photo.";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = event => {
+
+            const submission = {
+                id: Date.now(),
+                name: name,
+                challenge: selectedChallenge.name,
+                points: selectedChallenge.points,
+                photo: event.target.result,
+                date: new Date().toLocaleString(),
+                status: "Pending"
+            };
+
+            submissions.push(submission);
+
+            try {
+                saveSubmissions();
+            } catch (storageError) {
+                submissions.pop();
+                error.textContent =
+                    "Storage is full. Please use a smaller photo.";
+                return;
+            }
+
+            document.getElementById("proofContent").innerHTML = `
+                <div class="proof-panel">
+                    <h2>Submission Received! 🌱</h2>
+                    <p>Your photo has been submitted for review.</p>
+                    <h3>Status: Pending</h3>
+                    <p>Your points will be awarded after approval.</p>
+                </div>
+            `;
+
+            updatePoints();
+        };
+
+        reader.readAsDataURL(photo);
+    }
+
+    // ------------------------------------------
+    // SUBMISSION HISTORY
+    // ------------------------------------------
+
+    document.getElementById("historyButton")
+        .addEventListener("click", showHistory);
+
+    function showHistory() {
+
+        const content = document.getElementById("proofContent");
+
+        content.innerHTML = `
+            <div class="proof-panel">
+                <h2>My Submissions</h2>
+                <div id="historyList"></div>
+            </div>
+        `;
+
+        const list = document.getElementById("historyList");
+
+        if (submissions.length === 0) {
+            list.textContent = "You haven't submitted any challenges yet.";
+            return;
+        }
+
+        submissions.forEach(item => {
+
+            const entry = document.createElement("div");
+            entry.className = "proof-history-entry";
+
+            entry.innerHTML = `
+                <h3>${item.challenge}</h3>
+                <p>Submitted: ${item.date}</p>
+                <p>Reward: ${item.points} points</p>
+                <strong>${item.status}</strong>
+            `;
+
+            list.appendChild(entry);
+        });
+    }
+
+    // ------------------------------------------
+    // ADMIN DASHBOARD - PROTOTYPE ONLY
+    // ------------------------------------------
+
+    document.getElementById("adminButton")
+        .addEventListener("click", showAdmin);
+
+    function showAdmin() {
+
+        const content = document.getElementById("proofContent");
+
+        content.innerHTML = `
+            <div class="proof-panel">
+                <h2>Admin Dashboard</h2>
+                <p>Review submitted environmental activities.</p>
+                <h3>Approved Points: ${getPoints()}</h3>
+                <div id="adminSubmissions"></div>
+            </div>
+        `;
+
+        const list = document.getElementById("adminSubmissions");
+
+        if (submissions.length === 0) {
+            list.textContent = "No submissions yet.";
+            return;
+        }
+
+        submissions.forEach(item => {
+
+            const entry = document.createElement("div");
+            entry.className = "proof-admin-entry";
+
+            const title = document.createElement("h3");
+            title.textContent = item.challenge;
+
+            const user = document.createElement("p");
+            user.textContent = "Submitted by: " + item.name;
+
+            const date = document.createElement("p");
+            date.textContent = item.date;
+
+            const status = document.createElement("strong");
+            status.textContent = "Status: " + item.status;
+
+            const photo = document.createElement("img");
+            photo.src = item.photo;
+            photo.alt = "Submitted proof";
+
+            entry.append(title, user, date, status, photo);
+
+            if (item.status === "Pending") {
+
+                const approve = document.createElement("button");
+                approve.textContent = "Approve";
+
+                approve.addEventListener("click", () => {
+                    item.status = "Approved";
+                    saveSubmissions();
+                    updatePoints();
+                    showAdmin();
+                });
+
+                const reject = document.createElement("button");
+                reject.textContent = "Reject";
+
+                reject.addEventListener("click", () => {
+                    item.status = "Rejected";
+                    saveSubmissions();
+                    showAdmin();
+                });
+
+                entry.append(approve, reject);
+            }
+
+            list.appendChild(entry);
+        });
+    }
+
+    updatePoints();
+
+    console.log("BioRewards photo-proof system loaded!");
+});
+
