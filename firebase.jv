@@ -1,0 +1,23 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import { getAuth } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
+import { getFirestore } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA2imyKzHU-I2-wK1gs7hCX5V5FhOuowUg",
+    authDomain: "biorewards-8313f.firebaseapp.com",
+    projectId: "biorewards-8313f",
+    storageBucket: "biorewards-8313f.firebasestorage.app",
+    messagingSenderId: "329248221757",
+    appId: "1:329248221757:web:163a320cdc6dc1de249854",
+    measurementId: "G-V1EC14TDKX"
+};
+
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+
+export const db = getFirestore(app);
+
+console.log("BioRewards Firebase connected!");
