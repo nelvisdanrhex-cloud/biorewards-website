@@ -1,0 +1,907 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    --bg: #07140e;
+    --surface: #10251a;
+    --green: #39df70;
+    --light-green: #a5f3b5;
+    --text: #f2fff5;
+    --muted: #9bb5a2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    min-height: 75px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: rgba(7, 20, 14, 0.94);
+    border-bottom: 1px solid #ffffff12;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+    color: var(--light-green);
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    color: var(--green);
+}
+
+.start-button,
+.primary-button {
+    display: inline-block;
+    padding: 13px 22px;
+    background: var(--green);
+    color: #07140e;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 0 25px #39df7030;
+    transition: 0.3s;
+}
+
+.start-button:hover,
+.primary-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 35px #39df7060;
+}
+
+.hero {
+    min-height: 650px;
+    padding: 100px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    background:
+        radial-gradient(ellipse at 80% 45%, #164b2b55, transparent 50%),
+        radial-gradient(ellipse at 10% 10%, #123c2550, transparent 45%),
+        var(--bg);
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 650px;
+}
+
+.community-badge {
+    display: inline-block;
+    padding: 11px 17px;
+    background: #39df7015;
+    border: 1px solid #39df7030;
+    border-radius: 30px;
+    color: var(--light-green);
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.online-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-right: 7px;
+    box-shadow: 0 0 10px var(--green);
+}
+
+.hero h1 {
+    font-size: clamp(48px, 6vw, 82px);
+    line-height: 1.08;
+    letter-spacing: -4px;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: var(--green);
+    text-shadow: 0 0 35px #39df7040;
+}
+
+.hero h3 {
+    color: var(--light-green);
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+.hero-content > p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+    max-width: 550px;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 13px 22px;
+    border: 1px solid #ffffff30;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.secondary-button:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.statistics {
+    display: flex;
+    gap: 45px;
+    margin-top: 65px;
+}
+
+.statistics h2 {
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+.statistics p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.hero-visual {
+    width: 420px;
+    height: 420px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.planet {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #7dff9d, #16a94d 60%, #075e2c);
+    box-shadow: 0 0 60px #39df7060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 2;
+    animation: float 4s ease-in-out infinite;
+}
+
+.planet span {
+    font-size: 70px;
+}
+
+.planet p {
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid #39df7030;
+    border-radius: 50%;
+}
+
+.orbit-one {
+    width: 300px;
+    height: 300px;
+}
+
+.orbit-two {
+    width: 400px;
+    height: 400px;
+}
+
+.floating-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #172c22eF;
+    border: 1px solid #ffffff20;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px #0006;
+    backdrop-filter: blur(15px);
+    z-index: 3;
+    animation: float 4s ease-in-out infinite;
+}
+
+.floating-card > span:first-child {
+    font-size: 26px;
+}
+
+.floating-card h4 {
+    font-size: 12px;
+}
+
+.floating-card p {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.card-one {
+    top: 30px;
+    right: -20px;
+}
+
+.card-two {
+    bottom: 80px;
+    left: -30px;
+    animation-delay: 1s;
+}
+
+.card-three {
+    bottom: 10px;
+    right: -15px;
+    animation-delay: 2s;
+}
+
+.status {
+    font-size: 10px;
+    color: var(--green);
+}
+
+.about-section,
+.challenges-section,
+.impact-section,
+.rewards-section {
+    padding: 100px 8%;
+    text-align: center;
+}
+
+.about-section {
+    background: #0a1c12;
+}
+
+.section-label {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.about-section h2,
+.challenges-section h2,
+.impact-section h2,
+.rewards-section h2 {
+    font-size: clamp(30px, 4vw, 45px);
+    margin: 20px 0;
+}
+
+.about-section > p,
+.challenges-section > p,
+.impact-section > p,
+.rewards-section > p {
+    color: var(--muted);
+    max-width: 650px;
+    margin: 0 auto 35px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.challenges-section {
+    background: var(--bg);
+}
+
+.challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: 1050px;
+    margin: 50px auto 0;
+}
+
+.challenge-card {
+    background: linear-gradient(145deg, #142c1d, #0d1e14);
+    border: 1px solid #ffffff12;
+    border-radius: 18px;
+    padding: 35px 25px;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.challenge-card:hover {
+    transform: translateY(-8px);
+    border-color: #39df7070;
+    box-shadow: 0 15px 40px #39df7010;
+}
+
+.challenge-card > span {
+    font-size: 40px;
+}
+
+.challenge-card h3 {
+    margin: 20px 0 10px;
+    font-size: 19px;
+}
+
+.challenge-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.challenge-card strong {
+    color: var(--green);
+    font-size: 13px;
+}
+
+.impact-section {
+    background:
+        radial-gradient(ellipse at center, #164b2b50, transparent 70%),
+        #0a1c12;
+}
+
+.rewards-section {
+    background: var(--bg);
+}
+
+.rewards-section .primary-button {
+    margin-top: 10px;
+}
+
+footer {
+    padding: 45px 20px;
+    background: #061009;
+    text-align: center;
+    border-top: 1px solid #ffffff12;
+}
+
+footer h3 {
+    color: var(--light-green);
+    margin-bottom: 12px;
+}
+
+footer p {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 8px;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 18px 5%;
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        overflow-x: auto;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 75px 6%;
+    }
+
+    .hero-content > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions,
+    .statistics {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        max-width: 100%;
+        transform: scale(0.85);
+        margin: -15px 0;
+    }
+
+    .challenge-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 19px;
+    }
+
+    .start-button {
+        padding: 11px 13px;
+        font-size: 11px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero-visual {
+        transform: scale(0.72);
+        margin: -45px 0;
+    }
+
+    .statistics {
+        gap: 25px;
+    }
+}
+
+
+/* BIOREWARDS INTERACTIVE FEATURES */
+
+.points-display {
+    max-width: 1050px;
+    margin: 35px auto;
+}
+
+.points-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 22px;
+    border: 1px solid #39df7050;
+    border-radius: 16px;
+    background: #10251a;
+}
+
+.points-box > span {
+    font-size: 38px;
+}
+
+.points-box p {
+    color: #9bb5a2;
+    font-size: 12px;
+}
+
+.points-box h2 {
+    color: #39df70;
+    font-size: 30px;
+    margin: 0;
+}
+
+.challenge-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: #39df70;
+    color: #07140e;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.challenge-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px #39df7050;
+}
+
+.challenge-button:disabled {
+    background: #315b40;
+    color: #a5f3b5;
+    cursor: default;
+    transform: none;
+}
+
+#ecoNotification {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    background: #39df70;
+    color: #07140e;
+    padding: 15px 22px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 13px;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: 999;
+    text-align: center;
+    width: max-content;
+    max-width: 90%;
+}
+
+#ecoNotification.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
+/* =================================
+   BIOREWARDS PHOTO PROOF DESIGN
+================================= */
+
+.proof-challenges {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+    color: white;
+}
+
+.proof-challenges > h2 {
+    color: #39df70;
+    font-size: 30px;
+    text-align: center;
+}
+
+.proof-challenges > p {
+    color: #a5b9aa;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.eco-points-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    margin: 30px auto;
+    background: #10251a;
+    border: 1px solid #39df7050;
+    border-radius: 16px;
+    max-width: 400px;
+}
+
+.eco-points-card span {
+    font-size: 40px;
+}
+
+.eco-points-card p {
+    color: #a5b9aa;
+    margin: 0;
+}
+
+.eco-points-card h2 {
+    color: #39df70;
+    font-size: 32px;
+    margin: 5px 0 0;
+}
+
+.proof-challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.proof-challenge-card {
+    background: #10251a;
+    border: 1px solid #315b40;
+    border-radius: 16px;
+    padding: 25px;
+    transition: 0.3s;
+}
+
+.proof-challenge-card:hover {
+    transform: translateY(-5px);
+    border-color: #39df70;
+    box-shadow: 0 10px 30px #39df7015;
+}
+
+.proof-emoji {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.proof-challenge-card h3 {
+    color: #a5f3b5;
+}
+
+.proof-challenge-card p {
+    color: #a5b9aa;
+    line-height: 1.6;
+}
+
+.proof-reward {
+    color: #39df70;
+    font-weight: bold;
+    margin: 18px 0;
+}
+
+.proof-submit-button,
+.proof-history-button,
+.proof-admin-button,
+.proof-panel button {
+    padding: 13px 18px;
+    border: none;
+    border-radius: 9px;
+    background: #39df70;
+    color: #07140e;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.proof-submit-button {
+    width: 100%;
+}
+
+.proof-history-button,
+.proof-admin-button {
+    display: inline-block;
+    margin: 25px 8px;
+}
+
+.proof-admin-button {
+    background: #193c29;
+    color: #a5f3b5;
+    border: 1px solid #39df70;
+}
+
+.proof-panel {
+    margin: 35px auto;
+    padding: 28px;
+    max-width: 650px;
+    background: #10251a;
+    border: 1px solid #39df7050;
+    border-radius: 16px;
+}
+
+.proof-panel h2 {
+    color: #39df70;
+}
+
+.proof-panel h3 {
+    color: #a5f3b5;
+}
+
+.proof-panel p {
+    color: #a5b9aa;
+    line-height: 1.6;
+}
+
+.proof-panel label {
+    display: block;
+    margin-top: 18px;
+    color: #a5f3b5;
+}
+
+.proof-panel input {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: #07140e;
+    color: white;
+    border: 1px solid #315b40;
+    border-radius: 8px;
+}
+
+#photoPreview {
+    display: none;
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    margin-top: 20px;
+    border-radius: 12px;
+    background: #07140e;
+}
+
+#proofError {
+    color: #ff8585;
+    margin-top: 12px;
+}
+
+.proof-history-entry,
+.proof-admin-entry {
+    padding: 20px;
+    margin-top: 18px;
+    background: #07140e;
+    border: 1px solid #315b40;
+    border-radius: 12px;
+}
+
+.proof-history-entry strong {
+    color: #39df70;
+}
+
+.proof-admin-entry img {
+    display: block;
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    margin: 15px 0;
+    border-radius: 10px;
+    background: #10251a;
+}
+
+.proof-admin-entry button {
+    margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+    .proof-challenges {
+        padding: 12px;
+    }
+
+    .proof-challenges > h2 {
+        font-size: 24px;
+    }
+
+    .proof-challenge-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .proof-panel {
+        padding: 20px;
+    }
+}
+
+/* =========================
+   BIOREWARDS ACCOUNT DESIGN
+========================= */
+
+.account-container {
+    width: min(90%, 430px);
+    margin: 70px auto;
+    padding: 35px;
+    text-align: center;
+    background: rgba(10, 35, 22, 0.88);
+    border: 1px solid rgba(80, 220, 130, 0.3);
+    border-radius: 22px;
+    box-shadow: 0 0 35px rgba(30, 220, 100, 0.12);
+    color: #fff;
+    backdrop-filter: blur(15px);
+}
+
+.account-container h1 {
+    color: #8cffad;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.account-container p {
+    color: #c4d9ca;
+    margin-bottom: 22px;
+}
+
+.account-tabs {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.account-container button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    background: #176b3a;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.account-tabs button {
+    flex: 1;
+}
+
+.account-container button:hover {
+    background: #27a957;
+    box-shadow: 0 0 15px rgba(70, 255, 130, 0.35);
+}
+
+.account-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.account-container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(130, 255, 170, 0.25);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    outline: none;
+}
+
+.account-container input:focus {
+    border-color: #65ff9a;
+    box-shadow: 0 0 10px rgba(80, 255, 130, 0.2);
+}
+
+.account-container input::placeholder {
+    color: #a6b9ac;
+}
+
+.account-container form button {
+    margin-top: 8px;
+    background: linear-gradient(135deg, #168b43, #35cf70);
+}
+
+.account-container a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #8cffad;
+    text-decoration: none;
+}
+
+.account-container a:hover {
+    color: white;
+}
+
+#accountMessage {
+    overflow-wrap: anywhere;
+    font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .account-container {
+        padding: 25px 20px;
+        margin: 35px auto;
+    }
+  }
+      
